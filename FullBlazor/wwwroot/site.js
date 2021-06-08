@@ -37,6 +37,15 @@ window.addEventListener('beforeinstallprompt', function (e) {
     DotNet.invokeMethodAsync("MyBlazorAssembly", "MyBlazorInstallMethod");
 });
 
+window.addEventListener('appinstalled', () => {
+    // Hide the app-provided install promotion
+    hideInstallPromotion();
+    // Clear the deferredPrompt so it can be garbage collected
+    deferredPrompt = null;
+    // Optionally, send analytics event to indicate successful install
+    console.log('PWA was installed');
+});
+
 window.BlazorPWA = {
     installPWA: function () {
         if (window.PWADeferredPrompt) {
